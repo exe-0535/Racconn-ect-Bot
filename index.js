@@ -19,6 +19,8 @@ const client = new Discord.Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
     ]
 });
 
@@ -68,9 +70,17 @@ else {
         }
         handleCommand();
     })
+    client.on("messageCreate", (message) => {
+        if (message.content == "Is my raccoon listening?") {
+            message.reply("Listening.");
+        }
+
+    })
     client.login(TOKEN);
 }
-// client.once('ready', () => console.log('Bot is online!'));
+
+// client.once('ready', () => Discord.Message('Bot is online!'));
+
 
 // client.on('error', console.error);
 // client.on('warn', console.warn);
