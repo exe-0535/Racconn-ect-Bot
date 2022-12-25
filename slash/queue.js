@@ -18,6 +18,26 @@ module.exports = {
         const page = (interaction.options.getNumber("page") || 1) - 1
 
         if (page > totalPages)
-            return await interaction.editReply(`Nieprawidłowa strona. Aktualnie jest ${totalPages} stron kolejki`)
+            return await interaction.editReply(`Nieprawidłowa strona. Aktualnie jest ${totalPages} stron kolejki`);
+
+        const queueString = queue.tracks.slice(page * 10, page * 10 + 10).map((song, i) => {
+            return `**${page * 10 + i + 1}.** \`[${song.duration}]\` ${song.title} -- <@${song.requestedBy.id}>`
+        }).join("\n")
+
+        const currentSong = queue.current
+
+        await interaction.editReply({
+            embeds: [
+                new MessageEmbed()
+                    .setDescription(`**Aktualnie odtwarzane:**\n` +
+                        (currentSong ? `\`[${currentSong.duration}]\` ${currentSong.title} -- <@${currentSong.requestedBy.id}>` : "None") +
+                        `\n\n**Queue**\n${queueString}`
+                    )
+                    .setFooter({
+                        text: `Strona ${page + 1} z ${totalPages}`
+                    })
+                    .setThumbnail(currentSong.setThumbnail)
+            ]
+        })
     }
 }
