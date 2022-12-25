@@ -13,7 +13,7 @@ const TOKEN = process.env.TOKEN;
 const LOAD_SLASH = process.argv[2] == "load";
 
 const CLIENT_ID = "1053721800028196905";
-const GUILD_ID = "1054049393118040104";
+const GUILD_ID = "906281600923340851";
 
 const client = new Discord.Client({
     intents: [
@@ -34,7 +34,7 @@ client.player = new Player(client, {
 
 let commands = []
 
-const slashFiles = fs.readdirSync("./slash").filter(file => file.endsWith("play.js" || "queue.js"));
+const slashFiles = fs.readdirSync("./slash").filter(file => file.endsWith(".js"));
 for (const file of slashFiles) {
     const slashcmd = require(`./slash/${file}`);
     client.slashcommands.set(slashcmd.data.name, slashcmd);
