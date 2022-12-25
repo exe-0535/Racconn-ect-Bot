@@ -8,7 +8,7 @@ module.exports = {
         .addNumberOption((option) => option.setName("page").setDescription("Numer strony kolejki").setMinValue(1)),
 
     run: async ({ client, interaction }) => {
-        const queue = client.getQueue(interaction.guildId);
+        const queue = client.player.getQueue(interaction.guildId);
 
         if (!queue || !queue.playing) {
             return await interaction.editReply("Brak utworów w kolejce")
@@ -26,12 +26,14 @@ module.exports = {
 
         const currentSong = queue.current
 
+        let embed = new EmbedBuilder();
+
         await interaction.editReply({
             embeds: [
-                new MessageEmbed()
+                embed
                     .setDescription(`**Aktualnie odtwarzane:**\n` +
                         (currentSong ? `\`[${currentSong.duration}]\` ${currentSong.title} -- <@${currentSong.requestedBy.id}>` : "None") +
-                        `\n\n**Queue**\n${queueString}`
+                        `\n\n**Kolejka odtwarzania**\n${queueString}`
                     )
                     .setFooter({
                         text: `Strona ${page + 1} z ${totalPages}`
