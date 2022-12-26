@@ -27,20 +27,37 @@ module.exports = {
 
         if (interaction.options.getSubcommand() === "song") {
             let url = interaction.options.getString("url");
-            const result = await client.player.search(url, {
-                requestedBy: interaction.user,
-                searchEngine: QueryType.YOUTUBE_VIDEO
-            })
-            if (result.tracks.length === 0)
-                return interaction.editReply("Nie znaleziono podanego utworu");
+            if (url.startsWith("https://open.spotify.com/track/")) {
+                // code to handle Spotify link
+                const result = await client.player.search(url, {
+                    requestedBy: interaction.user,
+                    searchEngine: QueryType.SPOTIFY_SONG
+                })
 
-            const song = result.tracks[0];
-            await queue.addTrack(song);
+                const song = result.tracks[0];
 
-            embed
-                .setDescription(`**[${song.title}](${song.url})** dodano do kolejki`)
-                .setThumbnail(song.thumbnail)
-                .setFooter({ text: `Długość: ${song.duration}` })
+                await queue.addTrack(song);
+                embed
+                    .setDescription(`**[${song.title}](${song.url})** dodano do kolejki`)
+                    .setThumbnail(song.thumbnail)
+                    .setFooter({ text: `Długość: ${song.duration}` });
+            } else {
+                // code to handle YouTube link
+                const result = await client.player.search(url, {
+                    requestedBy: interaction.user,
+                    searchEngine: QueryType.YOUTUBE_VIDEO
+                })
+                if (result.tracks.length === 0)
+                    return interaction.editReply("Nie znaleziono podanego utworu");
+
+                const song = result.tracks[0];
+                await queue.addTrack(song);
+
+                embed
+                    .setDescription(`**[${song.title}](${song.url})** dodano do kolejki`)
+                    .setThumbnail(song.thumbnail)
+                    .setFooter({ text: `Długość: ${song.duration}` })
+            }
 
         } else if (interaction.options.getSubcommand() === "search") {
             let url = interaction.options.getString("searchterms")
