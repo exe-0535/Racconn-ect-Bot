@@ -8,10 +8,19 @@ module.exports = {
     run: async ({ client, interaction }) => {
         const queue = client.player.getQueue(interaction.guild);
         if (!queue || queue.tracks.length === 0) {
-            interaction.editReply("Brak utworów w kolejce");
-            return;
+            return await interaction.editReply({
+                embeds:
+                    embed
+                        .setColor(0xFFFFFF)
+                        .setTitle("Brak utworów w kolejce")
+            });
         }
         queue.shuffle();
-        interaction.editReply("Pomyślnie wymieszano");
+        return await interaction.editReply({
+            embeds:
+                embed
+                    .setColor(0xFFFFFF)
+                    .setTitle("Pomyślnie wymieszano")
+        });
     },
 };
