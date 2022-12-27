@@ -5,7 +5,7 @@ const { QueryType, Player } = require("discord-player");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("play")
-        .setDescription("Odtwarza utwór z YouTube")
+        .setDescription("Odtwarza utwór z YouTube bądź Spotify")
         .addSubcommand((subcommand) =>
             subcommand.setName("song")
                 .setDescription("Odtwarza utwór z podanego linku")
