@@ -5,25 +5,32 @@ const { QueryType, Player } = require("discord-player");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("play")
-        .setDescription("Odtwarza utwór z YouTube bądź Spotify")
+        .setDescription(":raccoon: Odtwarza utwór z YouTube bądź Spotify")
         .addSubcommand((subcommand) =>
             subcommand.setName("song")
-                .setDescription("Odtwarza utwór z podanego linku")
+                .setDescription(":raccoon: Odtwarza utwór z podanego linku")
                 .addStringOption((option) => option.setName("url").setDescription("Link do utworu").setRequired(true))
         )
         .addSubcommand((subcommand) =>
-            subcommand.setName("search").setDescription("Wyszukuje i odtwarza utwór na postawie podanych słów kluczowych")
+            subcommand.setName("search").setDescription(":raccoon: Wyszukuje i odtwarza utwór na postawie podanych słów kluczowych")
                 .addStringOption((option) => option.setName("searchterms").setDescription("Słowa kluczowe do wyszukiwania").setRequired(true))
         ),
 
     run: async ({ client, interaction }) => {
+        let embed = new EmbedBuilder();
+
         if (!interaction.member.voice.channel)
-            return interaction.editReply("Musisz być na kanale głosowym, aby użyć tej komendy");
+            return interaction.editReply({
+                embeds: [
+                    embed
+                        .setColor(0xFFFFFF)
+                        .setTitle(":raccoon: Musisz być połączony z czatem głosowym, aby użyć tej komendy")
+                ]
+            });
 
         const queue = await client.player.createQueue(interaction.guild);
         if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
-        let embed = new EmbedBuilder();
 
         if (interaction.options.getSubcommand() === "song") {
             let url = interaction.options.getString("url");
@@ -34,13 +41,24 @@ module.exports = {
                     searchEngine: QueryType.SPOTIFY_SONG
                 })
 
+                if (result.tracks.length === 0)
+                    return interaction.editReply({
+                        embeds: [
+                            embed
+                                .setColor(0xFFFFFF)
+                                .setTitle(":raccoon: Nie znaleziono podanego utworu")
+                        ]
+                    });
+
                 const song = result.tracks[0];
 
                 await queue.addTrack(song);
                 embed
-                    .setDescription(`**[${song.title}](${song.url})** dodano do kolejki`)
+                    .setColor(0xFFFFFF)
+                    .setTitle(`**[${song.title}](${song.url})**`)
+                    .setDescription(`dodano do kolejki`)
                     .setThumbnail(song.thumbnail)
-                    .setFooter({ text: `Długość: ${song.duration}` });
+                    .setFooter({ text: `Długość: \`${song.duration}\`` });
             } else {
                 // code to handle YouTube link
                 const result = await client.player.search(url, {
@@ -48,15 +66,23 @@ module.exports = {
                     searchEngine: QueryType.YOUTUBE_VIDEO
                 })
                 if (result.tracks.length === 0)
-                    return interaction.editReply("Nie znaleziono podanego utworu");
+                    return interaction.editReply({
+                        embeds: [
+                            embed
+                                .setColor(0xFFFFFF)
+                                .setTitle(":raccoon: Nie znaleziono podanego utworu")
+                        ]
+                    });
 
                 const song = result.tracks[0];
                 await queue.addTrack(song);
 
                 embed
-                    .setDescription(`**[${song.title}](${song.url})** dodano do kolejki`)
+                    .setColor(0xFFFFFF)
+                    .setTitle(`**[${song.title}](${song.url})**`)
+                    .setDescription(`dodano do kolejki`)
                     .setThumbnail(song.thumbnail)
-                    .setFooter({ text: `Długość: ${song.duration}` })
+                    .setFooter({ text: `Długość: \`${song.duration}\`` });
             }
 
         } else if (interaction.options.getSubcommand() === "search") {
@@ -67,7 +93,7 @@ module.exports = {
             })
 
             if (result.tracks.length === 0)
-                return interaction.editReply("Nie znaleziono podanego utworu");
+                return interaction.editReply(":raccoon: Nie znaleziono podanego utworu");
 
             const song = result.tracks[0]
             await queue.addTrack(song)
