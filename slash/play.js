@@ -55,10 +55,10 @@ module.exports = {
                 await queue.addTrack(song);
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle(`**[${song.title}](${song.url})**`)
+                    .setTitle(`${song.title}`)
                     .setDescription(`dodano do kolejki`)
                     .setThumbnail(song.thumbnail)
-                    .setFooter({ text: `Długość: \`${song.duration}\`` });
+                    .setFooter({ text: `Długość: ${song.duration} ` });
             } else {
                 // code to handle YouTube link
                 const result = await client.player.search(url, {
@@ -79,10 +79,10 @@ module.exports = {
 
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle(`**[${song.title}](${song.url})**`)
+                    .setTitle(`${song.title}`)
                     .setDescription(`dodano do kolejki`)
                     .setThumbnail(song.thumbnail)
-                    .setFooter({ text: `Długość: \`${song.duration}\`` });
+                    .setFooter({ text: `Długość: ${song.duration} ` });
             }
 
         } else if (interaction.options.getSubcommand() === "search") {
@@ -98,9 +98,11 @@ module.exports = {
             const song = result.tracks[0]
             await queue.addTrack(song)
             embed
-                .setDescription(`**[${song.title}](${song.url})** dodano do kolejki`)
+                .setColor(0xFFFFFF)
+                .setTitle(`${song.title}`)
+                .setDescription(`dodano do kolejki`)
                 .setThumbnail(song.thumbnail)
-                .setFooter({ text: `Długość: ${song.duration}` })
+                .setFooter({ text: `Długość: ${song.duration} ` });
         }
         if (!queue.playing) {
             await queue.play();
