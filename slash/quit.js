@@ -11,17 +11,19 @@ module.exports = {
         if (queue) {
             queue.stop();
             interaction.editReply({
-                embeds:
+                embeds: [
                     embed
                         .setColor(0xFFFFFF)
                         .setTitle("Rozłączono z czatem głosowym")
+                ]
             });
         } else {
             interaction.editReply({
-                embeds:
+                embeds: [
                     embed
                         .setColor(0xFFFFFF)
                         .setTitle("Ten bot nie znajduje się na czacie głosowym")
+                ]
             });
         }
     },
