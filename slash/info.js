@@ -4,7 +4,7 @@ const { MessageEmbed, CommandInteraction } = require("discord.js");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("info")
-        .setDescription("Displays information about the current track in the queue"),
+        .setDescription("Wyświetla informacje na temat aktualnie grającego utworu"),
 
     run: async ({ client, interaction }) => {
 
@@ -40,9 +40,9 @@ module.exports = {
                 embed
                     .setColor(0xFFFFFF)
                     .setTitle(song.title)
-                    .setDescription(`Currently playing: [${song.title}](${song.url})\n by **${song.author}**\n\n` + `\`00:00\` ` + bar + ` \`${song.duration}\`\n\n`)
+                    .setDescription(`Aktualnie odtwarzam: [${song.title}](${song.url})\n autorstwa **${song.author}**\n\n` + `\`00:00\` ` + bar + ` \`${song.duration}\`\n\n`)
                     .setThumbnail(song.thumbnail)
-                    .addFields({ name: `Tracks left in queue: `, value: `${tracksLeft}`, inline: true })
+                    .addFields({ name: `Pozostało w kolejce: `, value: `${tracksLeft}`, inline: true })
             ],
         })
     }

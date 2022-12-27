@@ -29,8 +29,8 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle(`Skipped "${song.title}"`)
-                    .setDescription(`by ${song.author}`)
+                    .setTitle(`Pominięto "${song.title}"`)
+                    .setDescription(`autorstwa ${song.author}`)
             ]
         });
     }
