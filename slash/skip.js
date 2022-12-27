@@ -29,8 +29,8 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle(`Skipped to: ${song.title}`)
-                    .setDescription(`By ${song.author}`)
+                    .setTitle(`Skipped "${song.title}"`)
+                    .setDescription(`by ${song.author}`)
             ]
         });
     }
