@@ -6,6 +6,7 @@ module.exports = {
         .setName("shuffle")
         .setDescription("Zmienia kolejność odtwarzania kolejki w losowy sposób"),
     run: async ({ client, interaction }) => {
+        const embed = new EmbedBuilder();
         const queue = client.player.getQueue(interaction.guild);
         if (!queue || queue.tracks.length === 0) {
             return await interaction.editReply({

@@ -40,7 +40,7 @@ module.exports = {
                 embed
                     .setColor(0xFFFFFF)
                     .setTitle(song.title)
-                    .setDescription(`Aktualnie odtwarzam: [${song.title}](${song.url})\n\n autorstwa **${song.author}**\n` + `\`00:00\` ` + bar + ` \`${song.duration}\`\n\n`)
+                    .setDescription(`Aktualnie odtwarzam: [${song.title}](${song.url})\n autorstwa **${song.author}**\n\n` + `\`00:00\` ` + bar + ` \`${song.duration}\`\n\n`)
                     .setThumbnail(song.thumbnail)
                     .addFields({ name: `Pozostało w kolejce: `, value: `${tracksLeft}`, inline: true })
             ],
