@@ -27,11 +27,11 @@ module.exports = {
         await interaction.editReply({
             embeds: [
                 embed
-                    .setColor(0x0099FF)
+                    .setColor(0xFFFFFF)
                     .setTitle(song.title)
-                    .setDescription(`Currently Playing [${song.title}](${song.url})\n\n` + bar + ` ` + `\`${song.duration}\``)
+                    .setDescription(`Currently playing: [${song.title}](${song.url})\n by **${song.author}**\n\n` + bar + ` ` + `\`${song.duration}\``)
                     .setThumbnail(song.thumbnail)
-                    .addFields({ name: `Tracks left in queue:`, value: `${tracksLeft}`, inline: true })
+                    .addFields({ name: `Tracks left in queue: `, value: `${tracksLeft}`, inline: true })
             ],
         })
     }
