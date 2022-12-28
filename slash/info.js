@@ -42,7 +42,10 @@ module.exports = {
                     .setTitle(song.title)
                     .setDescription(`Aktualnie odtwarzam: [${song.title}](${song.url})\n autorstwa **${song.author}**\n\n` + `\`00:00\` ` + bar + ` \`${song.duration}\`\n\n`)
                     .setThumbnail(song.thumbnail)
-                    .addFields({ name: `Pozostało w kolejce: `, value: `${tracksLeft}`, inline: true })
+                    .addFields(
+                        { name: `Pozostało w kolejce: `, value: `${tracksLeft}`, inline: true },
+                        { name: `Liczba odtworzeń: `, value: `${song.views}`, inline: true }
+                    )
             ],
         })
     }
