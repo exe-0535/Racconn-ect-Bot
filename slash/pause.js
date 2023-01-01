@@ -11,7 +11,7 @@ module.exports = {
 
         const queue = client.player.getQueue(interaction.guild);
 
-        if (!queue || queue.tracks.length === 0) {
+        if (!queue) {
             return await interaction.editReply({
                 embeds: [
                     embed
