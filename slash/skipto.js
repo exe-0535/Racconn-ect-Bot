@@ -5,11 +5,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("skipto")
         .setDescription("Pomija kolejkę do podanego w kolejności utworu")
-        .addSubcommand((subcommand) =>
-            subcommand.setName("queue_num")
-                .setDescription(":raccoon: Przewija do utworu którego numer w kolejce jest podanym numerem")
-                .addStringOption((option) => option.setName("num").setDescription("Numer utworu").setRequired(true))
-        ),
+        .addIntegerOption((option) => option.setName("num").setDescription("Numer utworu").setRequired(true)),
 
     run: async ({ client, interaction }) => {
 
@@ -37,40 +33,27 @@ module.exports = {
             });
         }
 
-        if (interaction.options.getSubcommand() === "queue_num") {
-            let number = interaction.options.getString("num");
+        let number = interaction.options.getInteger("num");
 
-            try {
-                parseInt(number);
-                if (number < 1 || number > queue.tracks.length) {
-                    return interaction.editReply({
-                        embeds: [
-                            embed
-                                .setColor(0xFFFFFF)
-                                .setTitle("Wprowadzono nieprawidłową wartość")
-                        ]
-                    });
-                }
-                queue.skipTo(queue.tracks[number - 1]);
-                return interaction.editReply({
-                    embeds: [
-                        embed
-                            .setColor(0xFFFFFF)
-                            .setTitle("Pomyślnie pominięto")
-                    ]
-                });
-            } catch (e) {
-                console.log(e);
-                return interaction.editReply({
-
-                    embeds: [
-                        embed
-                            .setColor(0xFFFFFF)
-                            .setTitle("Wprowadzono nieprawidłową wartość")
-                    ]
-                });
-            }
+        if (number < 1 || number > queue.tracks.length) {
+            return interaction.editReply({
+                embeds: [
+                    embed
+                        .setColor(0xFFFFFF)
+                        .setTitle("Wprowadzono nieprawidłową wartość")
+                ]
+            });
         }
+
+        queue.skipTo(queue.tracks[number - 1]);
+
+        return interaction.editReply({
+            embeds: [
+                embed
+                    .setColor(0xFFFFFF)
+                    .setTitle("Pomyślnie pominięto")
+            ]
+        });
 
     }
 }
