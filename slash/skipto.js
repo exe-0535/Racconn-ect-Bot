@@ -51,7 +51,7 @@ module.exports = {
                         ]
                     });
                 }
-                queue.skipTo(number);
+                queue.skipTo(queue.tracks[number - 1]);
                 return interaction.editReply({
                     embeds: [
                         embed
@@ -60,7 +60,9 @@ module.exports = {
                     ]
                 });
             } catch (e) {
+                console.log(e);
                 return interaction.editReply({
+
                     embeds: [
                         embed
                             .setColor(0xFFFFFF)
