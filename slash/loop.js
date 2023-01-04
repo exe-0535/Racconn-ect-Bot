@@ -34,7 +34,9 @@ module.exports = {
 
         try {
 
-            if (queue.setRepeatMode(QueueRepeatMode.OFF) === true) {
+            // Check if the repeat mode is currently set to OFF
+            if (queue.repeatMode === QueueRepeatMode.OFF) {
+                // If it is, set it to TRACK and send a message
                 queue.setRepeatMode(QueueRepeatMode.TRACK);
                 return interaction.editReply({
                     embeds: [
@@ -44,14 +46,14 @@ module.exports = {
                     ]
                 });
             }
-
-            if (queue.setRepeatMode(QueueRepeatMode.TRACK) === true) {
+            // If repeat mode is already set to TRACK, set it to OFF and send a message
+            else if (queue.repeatMode === QueueRepeatMode.TRACK) {
                 queue.setRepeatMode(QueueRepeatMode.OFF);
                 return interaction.editReply({
                     embeds: [
                         embed
                             .setColor(0xFFFFFF)
-                            .setTitle("Ponownie odtwarzam kolejkę")
+                            .setTitle("Resuming normal queue playback")
                     ]
                 });
             }
