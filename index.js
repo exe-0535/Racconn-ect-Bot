@@ -30,7 +30,7 @@ client.player = new Player(client, {
         quality: "highestaudio",
         highWaterMark: 1 << 25
     }
-});
+})
 
 let commands = []
 
