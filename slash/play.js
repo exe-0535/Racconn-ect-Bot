@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 const { MessageEmbed, CommandInteraction } = require("discord.js");
 const { QueryType, Player } = require("discord-player");
+const { PlayerOptions } = require("discord-player");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -28,7 +29,14 @@ module.exports = {
                 ]
             });
 
-        const queue = await client.player.createQueue(interaction.guild);
+        const queue = await client.player.createQueue(
+            interaction.guild,
+            {
+                // Bot will now disconnect after 10 mins of inactivity and will join the voice unmuted
+                leaveOnEndCooldown: 600000,
+                autoSelfDeaf: false
+            }
+        );
         if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
 
