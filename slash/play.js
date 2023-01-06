@@ -81,14 +81,50 @@ module.exports = {
                     requestedBy: interaction.user,
                     searchEngine: QueryType.SPOTIFY_PLAYLIST
                 })
+
+                // Create playlist constraint
+                const PLAYLIST = await client.player.createPlaylist({
+                    author: SEARCH_RESULT.author,
+                    description: SEARCH_RESULT.description,
+                    id: SEARCH_RESULT.id,
+                    source: SEARCH_RESULT.source,
+                    thumbnail: SEARCH_RESULT.thumbnail,
+                    title: SEARCH_RESULT.title,
+                    tracks: SEARCH_RESULT.tracks,
+                    type: SEARCH_RESULT.type,
+                    url: SEARCH_RESULT.url
+                })
+
+                // Add tracks from playlist to the queue
+                await QUEUE.addTracks(PLAYLIST.tracks);
+
+                // Set embed
+                embed
+                    .setColor(0xFFFFFF)
+                    .setDescription(`**${PLAYLIST.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
+                    .setThumbnail(PLAYLIST.thumbnail)
             }
 
             // Handling YOUTUBE PLAYLIST
             if (insert.startsWith("https://youtube.com/playlist?")) {
-                const SEARCH_RESULT = await client.player.search(insert, {
-                    requestedBy: interaction.user,
-                    searchEngine: QueryType.YOUTUBE_PLAYLIST
-                })
+                // Creating a playlist
+                const PLAYLIST = await client.player.createPlaylist(
+                    client.player.search(insert, {
+                        requestedBy: interaction.user,
+                        searchEngine: QueryType.YOUTUBE_PLAYLIST
+                    })
+                )
+                try {
+                    // Add playlist tracks to the queue
+                    QUEUE.addTracks(PLAYLIST.playlist.tracks);
+                } catch (e) {
+                    console.log(e);
+                }
+                // Set embed
+                embed
+                    .setColor(0xFFFFFF)
+                    .setDescription(`**${PLAYLIST.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
+                    .setThumbnail(PLAYLIST.thumbnail)
             }
 
             // Handling TYPOS, OTHER SEARCHES FOR INDIVIDUAL TRACKS
