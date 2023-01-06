@@ -122,10 +122,12 @@ module.exports = {
                 });
             }
 
-            await QUEUE.addTracks(SEARCH_RESULT.tracks)
+            await QUEUE.addTracks(SEARCH_RESULT.tracks);
+
             embed
+                .setColor(0xFFFFFF)
                 .setDescription(`**${SEARCH_RESULT.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
-                .setThumbnail(PLAYLIST.thumbnail)
+                .setThumbnail(PLAYLIST.thumbnail.url)
         }
 
         // Handling YOUTUBE VIDEOS together with KEYWORD-SEARCH
