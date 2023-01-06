@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
-const { MessageEmbed, CommandInteraction } = require("discord.js");
-const { QueryType, Player } = require("discord-player");
+const { QueryType } = require("discord-player");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,9 +16,11 @@ module.exports = {
         ),
 
     run: async ({ client, interaction }) => {
+        // EmbedBuilder
         let embed = new EmbedBuilder();
 
-        if (!interaction.member.voice.channel)
+        // Check voice connection
+        if (!interaction.member.voice.channel) {
             return interaction.editReply({
                 embeds: [
                     embed
@@ -27,8 +28,10 @@ module.exports = {
                         .setTitle(":raccoon: Musisz być połączony z czatem głosowym, aby użyć tej komendy")
                 ]
             });
+        }
 
-        const queue = await client.player
+        // Queue object declaration
+        const QUEUE = await client.player
             .createQueue(
                 interaction.guild,
                 {
@@ -38,7 +41,8 @@ module.exports = {
                 }
             );
 
-        if (!queue.connection) await queue.connect(interaction.member.voice.channel)
+        // Bot connection to the voice channel
+        if (!QUEUE.connection) await QUEUE.connect(interaction.member.voice.channel)
 
 
         if (interaction.options.getSubcommand() === "song") {
@@ -61,7 +65,7 @@ module.exports = {
 
                 const song = result.tracks[0];
 
-                await queue.addTrack(song);
+                await QUEUE.addTrack(song);
                 embed
                     .setColor(0xFFFFFF)
                     .setTitle(`${song.title}`)
@@ -84,7 +88,7 @@ module.exports = {
                     });
 
                 const song = result.tracks[0];
-                await queue.addTrack(song);
+                await QUEUE.addTrack(song);
 
                 embed
                     .setColor(0xFFFFFF)
@@ -113,10 +117,13 @@ module.exports = {
                 .setThumbnail(song.thumbnail)
                 .setFooter({ text: `Długość: ${song.duration} ` });
         }
-        if (!queue.playing) {
-            await queue.play();
+
+        // Starts playing the queue
+        if (!QUEUE.playing) {
+            await QUEUE.play();
         }
 
+        // Returns the embed onto the text channel
         await interaction.editReply({
             embeds: [embed]
         })
