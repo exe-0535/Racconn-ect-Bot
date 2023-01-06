@@ -38,78 +38,123 @@ module.exports = {
         // Getting the users input
         let insert = interaction.options.getString("insert");
 
-        try {
-            // Handling SPOTIFY SONG
-            if (insert.startsWith("https://open.spotify.com/track/")) {
+        // Handling SPOTIFY SONG
+        if (insert.startsWith("https://open.spotify.com/track/")) {
 
-                const SEARCH_RESULT = await client.player.search(insert, {
-                    requestedBy: interaction.user,
-                    searchEngine: QueryType.SPOTIFY_SONG
-                })
+            const SEARCH_RESULT = await client.player.search(insert, {
+                requestedBy: interaction.user,
+                searchEngine: QueryType.SPOTIFY_SONG
+            })
 
-                // If no results were found
-                if (SEARCH_RESULT.tracks.length === 0) {
-                    return interaction.editReply({
-                        embeds: [
-                            embed
-                                .setColor(0xFFFFFF)
-                                .setTitle(":raccoon: Nie znaleziono podanego utworu")
-                        ]
-                    });
-                }
-
-                // Declaring song searched for
-                const SONG = SEARCH_RESULT.tracks[0];
-
-                // Adding the song to the queue
-                await QUEUE.addTrack(SONG);
-                embed
-                    .setColor(0xFFFFFF)
-                    .setTitle(`${SONG.title}`)
-                    .setDescription(`dodano do kolejki`)
-                    .setThumbnail(SONG.thumbnail)
-                    .setFooter({ text: `Długość: ${SONG.duration} ` });
+            // If no results were found
+            if (SEARCH_RESULT.tracks.length === 0) {
+                return interaction.editReply({
+                    embeds: [
+                        embed
+                            .setColor(0xFFFFFF)
+                            .setTitle(":raccoon: Nie znaleziono podanego utworu")
+                    ]
+                });
             }
 
-            // Handling SPOTIFY ALBUM AND PLAYLIST
-            // Since discord-player handles it like the same case in switch:
-            // case QueryType.SPOTIFY_PLAYLIST:
-            // case QueryType.SPOTIFY_ALBUM:
-            if (insert.startsWith("https://open.spotify.com/playlist/") || insert.startsWith("https://open.spotify.com/album/")) {
-                const SEARCH_RESULT = await client.player.search(insert, {
-                    requestedBy: interaction.user,
-                    searchEngine: QueryType.SPOTIFY_PLAYLIST
-                })
+            // Declaring song searched for
+            const SONG = SEARCH_RESULT.tracks[0];
 
-                // Create playlist constraint
-                const PLAYLIST = SEARCH_RESULT.playlist;
+            // Adding the song to the queue
+            await QUEUE.addTrack(SONG);
+            embed
+                .setColor(0xFFFFFF)
+                .setTitle(`${SONG.title}`)
+                .setDescription(`dodano do kolejki`)
+                .setThumbnail(SONG.thumbnail)
+                .setFooter({ text: `Długość: ${SONG.duration} ` });
+        }
 
-                // Add tracks from playlist to the queue
-                await QUEUE.addTracks(SEARCH_RESULT.tracks);
+        // Handling SPOTIFY ALBUM AND PLAYLIST
+        // Since discord-player handles it like the same case in switch:
+        // case QueryType.SPOTIFY_PLAYLIST:
+        // case QueryType.SPOTIFY_ALBUM:
+        else if (insert.startsWith("https://open.spotify.com/playlist/") || insert.startsWith("https://open.spotify.com/album/")) {
+            const SEARCH_RESULT = await client.player.search(insert, {
+                requestedBy: interaction.user,
+                searchEngine: QueryType.SPOTIFY_PLAYLIST
+            })
 
-                // Set embed
-                embed
-                    .setColor(0xFFFFFF)
-                    .setDescription(`**${SEARCH_RESULT.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
-                    .setThumbnail(PLAYLIST.thumbnail)
+            // Create playlist constraint
+            const PLAYLIST = SEARCH_RESULT.playlist;
+
+            if (SEARCH_RESULT.tracks.length === 0) {
+                return interaction.editReply({
+                    embeds: [
+                        embed
+                            .setColor(0xFFFFFF)
+                            .setTitle(":raccoon: Nie znaleziono podanej playlisty")
+                    ]
+                });
             }
 
-            // Handling YOUTUBE PLAYLIST
-            if (insert.startsWith("https://youtube.com/playlist?")) {
-                const SEARCH_RESULT = await client.player.search(insert, {
-                    requestedBy: interaction.user,
-                    searchEngine: QueryType.YOUTUBE_PLAYLIST
-                })
+            // Add tracks from playlist to the queue
+            await QUEUE.addTracks(SEARCH_RESULT.tracks);
 
-                const PLAYLIST = SEARCH_RESULT.playlist
-                await QUEUE.addTracks(SEARCH_RESULT.tracks)
-                embed
-                    .setDescription(`**${SEARCH_RESULT.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
-                    .setThumbnail(PLAYLIST.thumbnail)
+            // Set embed
+            embed
+                .setColor(0xFFFFFF)
+                .setDescription(`**${SEARCH_RESULT.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
+                .setThumbnail(PLAYLIST.thumbnail)
+        }
+
+        // Handling YOUTUBE PLAYLIST
+        else if (insert.startsWith("https://youtube.com/playlist?")) {
+            const SEARCH_RESULT = await client.player.search(insert, {
+                requestedBy: interaction.user,
+                searchEngine: QueryType.YOUTUBE_PLAYLIST
+            })
+
+            const PLAYLIST = SEARCH_RESULT.playlist
+
+            if (SEARCH_RESULT.tracks.length === 0) {
+                return interaction.editReply({
+                    embeds: [
+                        embed
+                            .setColor(0xFFFFFF)
+                            .setTitle(":raccoon: Nie znaleziono podanej playlisty")
+                    ]
+                });
             }
 
-        } catch (e) {
-            console.log(e);
+            await QUEUE.addTracks(SEARCH_RESULT.tracks)
+            embed
+                .setDescription(`**${SEARCH_RESULT.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
+                .setThumbnail(PLAYLIST.thumbnail)
+        }
+
+        // Handling YOUTUBE VIDEOS together with KEYWORD-SEARCH
+        else {
+            const SEARCH_RESULT = await client.player.search(insert, {
+                requestedBy: interaction.user,
+                searchEngine: QueryType.AUTO
+            })
+
+            if (SEARCH_RESULT.tracks.length === 0) {
+                return interaction.editReply({
+                    embeds: [
+                        embed
+                            .setColor(0xFFFFFF)
+                            .setTitle(":raccoon: Nie znaleziono podanego utworu")
+                    ]
+                });
+            }
+
+            const SONG = SEARCH_RESULT.tracks[0];
+
+            // Adding the song to the queue
+            await QUEUE.addTrack(SONG);
+            embed
+                .setColor(0xFFFFFF)
+                .setTitle(`${SONG.title}`)
+                .setDescription(`dodano do kolejki`)
+                .setThumbnail(SONG.thumbnail)
+                .setFooter({ text: `Długość: ${SONG.duration} ` });
         }
 
         // Starts playing the queue
