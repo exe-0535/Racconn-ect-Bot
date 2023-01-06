@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 const { QueryType, Playlist, Track } = require("discord-player");
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("play")
@@ -86,12 +85,12 @@ module.exports = {
                 const PLAYLIST = SEARCH_RESULT.playlist;
 
                 // Add tracks from playlist to the queue
-                await QUEUE.addTracks(PLAYLIST.tracks);
+                await QUEUE.addTracks(SEARCH_RESULT.tracks);
 
                 // Set embed
                 embed
                     .setColor(0xFFFFFF)
-                    .setDescription(`**${PLAYLIST.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
+                    .setDescription(`**${SEARCH_RESULT.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
                     .setThumbnail(PLAYLIST.thumbnail)
             }
 
@@ -108,84 +107,10 @@ module.exports = {
                     .setDescription(`**${SEARCH_RESULT.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
                     .setThumbnail(PLAYLIST.thumbnail)
             }
-            // Handling TYPOS, OTHER SEARCHES FOR INDIVIDUAL TRACKS
 
         } catch (e) {
             console.log(e);
         }
-
-        // if (interaction.options.getSubcommand() === "song") {
-        //     let url = interaction.options.getString("url");
-        //     if (url.startsWith("https://open.spotify.com/track/")) {
-        //         // code to handle Spotify link
-        //         const result = await client.player.search(url, {
-        //             requestedBy: interaction.user,
-        //             searchEngine: QueryType.SPOTIFY_SONG
-        //         })
-
-        //         if (result.tracks.length === 0)
-        //             return interaction.editReply({
-        //                 embeds: [
-        //                     embed
-        //                         .setColor(0xFFFFFF)
-        //                         .setTitle(":raccoon: Nie znaleziono podanego utworu")
-        //                 ]
-        //             });
-
-        //         const song = result.tracks[0];
-
-        //         await QUEUE.addTrack(song);
-        //         embed
-        //             .setColor(0xFFFFFF)
-        //             .setTitle(`${song.title}`)
-        //             .setDescription(`dodano do kolejki`)
-        //             .setThumbnail(song.thumbnail)
-        //             .setFooter({ text: `Długość: ${song.duration} ` });
-        //     } else {
-        //         // code to handle YouTube link
-        //         const result = await client.player.search(url, {
-        //             requestedBy: interaction.user,
-        //             searchEngine: QueryType.YOUTUBE_VIDEO
-        //         })
-        //         if (result.tracks.length === 0)
-        //             return interaction.editReply({
-        //                 embeds: [
-        //                     embed
-        //                         .setColor(0xFFFFFF)
-        //                         .setTitle(":raccoon: Nie znaleziono podanego utworu")
-        //                 ]
-        //             });
-
-        //         const song = result.tracks[0];
-        //         await QUEUE.addTrack(song);
-
-        //         embed
-        //             .setColor(0xFFFFFF)
-        //             .setTitle(`${song.title}`)
-        //             .setDescription(`dodano do kolejki`)
-        //             .setThumbnail(song.thumbnail)
-        //             .setFooter({ text: `Długość: ${song.duration} ` });
-        //     }
-
-        //     } else if(interaction.options.getSubcommand() === "search") {
-        //     let url = interaction.options.getString("searchterms")
-        //     const result = await client.player.search(url, {
-        //         requestedBy: interaction.user,
-        //         searchEngine: QueryType.AUTO
-        //     })
-
-        //     if (result.tracks.length === 0)
-        //         return interaction.editReply(":raccoon: Nie znaleziono podanego utworu");
-
-        //     const song = result.tracks[0]
-        //     await queue.addTrack(song)
-        //     embed
-        //         .setColor(0xFFFFFF)
-        //         .setTitle(`${song.title}`)
-        //         .setDescription(`dodano do kolejki`)
-        //         .setThumbnail(song.thumbnail)
-        //         .setFooter({ text: `Długość: ${song.duration} ` });
-        // }
 
         // Starts playing the queue
         if (!QUEUE.playing) {
