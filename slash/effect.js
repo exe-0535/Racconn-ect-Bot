@@ -7,7 +7,7 @@ AudioFilters.define("bassboost_low", bass(4));
 
 // Slowed + reverb sfx
 
-AudioFilters.define("slowed_reverb", "asetrate=48000*0.87,aresample=48000,aecho=1.0:0.7:400:0.01")
+AudioFilters.define("slowed_reverb", "asetrate=48000*0.85,aresample=48000,aecho=1.0:0.9:2000:0.1")
 
 module.exports = {
     data: new SlashCommandBuilder()
