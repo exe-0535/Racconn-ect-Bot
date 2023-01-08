@@ -46,8 +46,44 @@ module.exports = {
         }
 
         // Getting the users input
-        let sfx = interaction.options.getString("sfx").toLowerCase();
+        let sfx = interaction.options.getString("sfx");
 
+        if (sfx === "8D")
+            queue.setFilters({
+                "8D": true
+            });
 
+        else if (sfx === "bassboost")
+            queue.setFilters({
+                subboost: true
+            });
+
+        else if (sfx === "vaporwave")
+            queue.setFilters({
+                vaporwave: true
+            });
+
+        else if (sfx === "phaser")
+            queue.setFilters({
+                phaser: true
+            });
+
+        else if (sfx === "nightcore")
+            queue.setFilters({
+                nightcore: true
+            });
+
+        else if (sfx === "chorus")
+            queue.setFilters({
+                chorus: true
+            });
+
+        return await interaction.editReply({
+            embeds: [
+                embed
+                    .setColor(0xFFFFFF)
+                    .setTitle(`Dodano efekt: ${sfx.toUpperCase()}`)
+            ]
+        });
     }
 }
