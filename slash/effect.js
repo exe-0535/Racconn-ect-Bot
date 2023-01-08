@@ -7,6 +7,7 @@ AudioFilters.define("bassboost_low", bass(4));
 
 // Slowed + reverb sfx
 
+AudioFilters.define("slowed_reverb", "asetrate=48000*0.87,aresample=48000,aecho=1.0:0.7:400:0.01")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,7 +20,8 @@ module.exports = {
                 { name: "VAPORWAVE", value: "vaporwave" },
                 { name: "PHASER", value: "phaser" },
                 { name: "NIGHTCORE", value: "nightcore" },
-                { name: "CHORUS", value: "chorus" }
+                { name: "CHORUS", value: "chorus" },
+                { name: "SLOWED + REVERB", value: "slowed_reverb" }
             )
         ),
 
@@ -60,6 +62,12 @@ module.exports = {
                 "8D": true
             });
 
+        else if (sfx === "slowed_reverb") {
+            queue.setFilters({
+                slowed_reverb: true
+            });
+        }
+
         else if (sfx === "bassboost")
             queue.setFilters({
                 bassboost_low: true,
@@ -90,7 +98,7 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle(`Dodano efekt: ${sfx.toUpperCase()}`)
+                    .setTitle(`Aktywuję efekt: ${sfx.toUpperCase()}`)
             ]
         });
     }
