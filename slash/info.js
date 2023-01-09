@@ -34,8 +34,6 @@ module.exports = {
 
         const song = queue.current;
 
-        if (queue.getFiltersEnabled().includes("slowed_reverb")) console.log(song.duration);
-
         await interaction.editReply({
             embeds: [
                 embed
