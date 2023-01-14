@@ -11,7 +11,7 @@ AudioFilters.define("slowed_reverb", "asetrate=48000*0.85,aresample=48000,aecho=
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("sfx_on")
+        .setName("soundeffect_on")
         .setDescription("Aktywuje wprowadzony efekt dźwiękowy na odtwarzanym utworze")
         .addStringOption((option) => option.setName("sfx").setDescription("Nazwa efektu").setRequired(true)
             .addChoices(
