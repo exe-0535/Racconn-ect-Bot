@@ -9,6 +9,13 @@ module.exports = {
         let embed = new EmbedBuilder();
         if (queue) {
             queue.stop();
+            return interaction.editReply({
+                embeds: [
+                    embed
+                        .setColor(0xFFFFFF)
+                        .setTitle("Rozłączono z czatem głosowym")
+                ]
+            });
         } else {
             interaction.editReply({
                 embeds: [
