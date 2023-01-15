@@ -79,11 +79,3 @@ else {
     })
     client.login(TOKEN);
 }
-
-// client.once('ready', () => Discord.Message('Bot is online!'));
-
-
-// client.on('error', console.error);
-// client.on('warn', console.warn);
-
-// client.login('DISCORD_TOKEN');
