@@ -70,6 +70,7 @@ else {
         }
         handleCommand();
     })
+    // If you want to test out your bot
     client.on("messageCreate", (message) => {
         if (message.content == "Is my raccoon listening?") {
             message.reply("Listening.");
