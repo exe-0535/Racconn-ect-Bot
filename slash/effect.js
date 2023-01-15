@@ -1,8 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 const { AudioFilters } = require("discord-player");
-const bass = (g) => `bass=g=${g}:f=110:w=0.3`;
+const bass = (g) => `bass=g=${g}:f=140:w=0.3`;
 
-AudioFilters.define("subboost", "asubboost=feedback=0.4:cutoff=80");
+AudioFilters.define("subboost", "asubboost=feedback=0.4:cutoff=120");
 AudioFilters.define("bassboost_low", bass(4));
 
 // Slowed + reverb sfx
