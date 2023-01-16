@@ -75,7 +75,6 @@ else {
         if (message.content == "Is my raccoon listening?") {
             message.reply("Listening.");
         }
-        // dick 
     })
     client.login(TOKEN);
 }
