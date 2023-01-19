@@ -1,10 +1,9 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
-const { MessageEmbed, CommandInteraction } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("queue")
-        .setDescription(":raccoon: Wyświetla bieżącą kolejkę odtwarzania")
+        .setDescription("Wyświetla bieżącą kolejkę odtwarzania")
         .addNumberOption((option) => option.setName("page").setDescription("Numer strony kolejki").setMinValue(1)),
 
     run: async ({ client, interaction }) => {
