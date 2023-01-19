@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("quit")
-        .setDescription(":raccoon: Rozłącza bota z kanału głosowego"),
+        .setDescription("Rozłącza bota z kanału głosowego"),
     run: async ({ client, interaction }) => {
         const queue = client.player.getQueue(interaction.guild);
         let embed = new EmbedBuilder();

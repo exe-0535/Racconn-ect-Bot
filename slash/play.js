@@ -3,7 +3,7 @@ const { QueryType } = require("discord-player");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("play")
-        .setDescription(":raccoon: Odtwarza utwór z YouTube bądź Spotify")
+        .setDescription("Odtwarza utwór z YouTube bądź Spotify")
         .addStringOption((option) => option.setName("insert").setDescription("Link bądź słowa kluczowe").setRequired(true)),
 
     run: async ({ client, interaction }) => {
