@@ -21,7 +21,14 @@ module.exports = {
                 { name: "PHASER", value: "phaser" },
                 { name: "NIGHTCORE", value: "nightcore" },
                 { name: "CHORUS", value: "chorus" },
-                { name: "SLOWED + REVERB", value: "slowed_reverb" }
+                { name: "SLOWED + REVERB", value: "slowed_reverb" },
+                { name: "COMPRESSOR", value: "compressor" },
+                { name: "DIM", value: "dim" },
+                { name: "FLANGER", value: "flanger" },
+                { name: "MONO", value: "mono" },
+                { name: "REVERSE", value: "reverse" },
+                { name: "EXPANDER", value: "expander" },
+                { name: "SURROUNDING", value: "surrounding" }
             )
         ),
 
@@ -93,6 +100,44 @@ module.exports = {
             queue.setFilters({
                 chorus: true
             });
+
+        else if (sfx === "compressor") {
+            queue.setFilters({
+                compressor: true
+            });
+        }
+
+        else if (sfx === "dim")
+            queue.setFilters({
+                dim: true
+            });
+
+        else if (sfx === "flanger")
+            queue.setFilters({
+                flanger: true
+            });
+
+        else if (sfx === "mono")
+            queue.setFilters({
+                mono: true
+            });
+
+        else if (sfx === "reverse")
+            queue.setFilters({
+                reverse: true
+            });
+
+        else if (sfx === "expander")
+            queue.setFilters({
+                expander: true
+            });
+
+        else if (sfx === "surrounding")
+            queue.setFilters({
+                surrounding: true
+            });
+
+
 
         return await interaction.editReply({
             embeds: [
