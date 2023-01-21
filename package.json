@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "exe-0535",
+  "license": "MIT",
   "dependencies": {
     "@discordjs/builders": "^1.4.0",
     "@discordjs/opus": "^0.8.0",
