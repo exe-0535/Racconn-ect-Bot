@@ -29,6 +29,6 @@ Project uses the following libraries:
 ###
 3. Instal dependencies: ```npm install```
 ### 
-4. Create .env file and type in: <pre>TOKEN= // your bot token <br>CLIENT_ID= // your discord appliaction id <br>GUILD_ID= // the id of the guild you want the bot to run on</pre>To get the guild id, you must turn on the developer mode in discord settings
+4. Create .env file and type in: <pre>TOKEN= // your bot token <br>GUILD_ID= // the id of the guild you want the bot to run on</pre>To get the guild id, you must turn on the developer mode in discord settings
 ###
 5. Run the bot by typing in terminal ```npm run start``` or ```npm start```
