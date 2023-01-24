@@ -12,8 +12,13 @@ AudioFilters.define("slowed_reverb", "asetrate=48000*0.85,aresample=48000,aecho=
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("soundeffect_on")
-        .setDescription("Aktywuje wprowadzony efekt dźwiękowy na odtwarzanym utworze")
-        .addStringOption((option) => option.setName("sfx").setDescription("Nazwa efektu").setRequired(true)
+        .setDescription("Activates inserted sound effect on the current queue")
+        .setDescriptionLocalizations({
+            pl: 'Aktywuje wprowadzony efekt dźwiękowy na aktualnej kolejce'
+        })
+        .addStringOption((option) => option.setName("sfx").setDescription("Effect name").setDescriptionLocalizations({
+            pl: 'Nazwa efektu'
+        }).setRequired(true)
             .addChoices(
                 { name: "8D", value: "8D" },
                 { name: "BASS BOOST", value: "bassboost" },
@@ -42,7 +47,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle(":raccoon: Musisz być połączony z czatem głosowym, aby użyć tej komendy")
+                        .setTitle(":raccoon: You have to be connected to voice channel to use this command")
                 ]
             });
         }
@@ -56,7 +61,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Brak utworów w kolejce")
+                        .setTitle("No tracks in queue")
                 ]
             });
         }
@@ -143,7 +148,7 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle(`Aktywuję efekt: ${sfx.toUpperCase()}`)
+                    .setTitle(`Activating effect: ${sfx.toUpperCase()}`)
             ]
         });
     }

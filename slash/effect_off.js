@@ -3,7 +3,10 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("soundeffect_off")
-        .setDescription("Dezaktywuje wszystkie efekty dżwiękowe na kanale głosowym"),
+        .setDescription("Deactivates all sound effects from the current queue")
+        .setDescriptionLocalizations({
+            pl: 'Dezaktywuje wszystkie efekty dżwiękowe z aktualnej kolejki'
+        }),
 
     run: async ({ client, interaction }) => {
         // EmbedBuilder
@@ -15,7 +18,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle(":raccoon: Musisz być połączony z czatem głosowym, aby użyć tej komendy")
+                        .setTitle(":raccoon: You have to be connected to a voice channel to use this command")
                 ]
             });
         }
@@ -29,7 +32,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Brak utworów w kolejce")
+                        .setTitle("No tracks in queue")
                 ]
             });
         }
@@ -49,7 +52,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Wyłączono wszystkie efekty dźwiękowe")
+                        .setTitle("Turned off all the sound effects")
                 ]
             });
         } else {
@@ -57,7 +60,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Nie zastosowano żadnego efektu dźwiękowego")
+                        .setTitle("Couldn't find any sound effects to turn off")
                 ]
             });
         }
