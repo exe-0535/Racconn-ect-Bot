@@ -3,8 +3,20 @@ const { QueryType } = require("discord-player");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("play")
-        .setDescription("Odtwarza utwór z YouTube bądź Spotify")
-        .addStringOption((option) => option.setName("insert").setDescription("Link bądź słowa kluczowe").setRequired(true)),
+        .setNameLocalizations({
+            pl: 'odtwarzaj'
+        })
+        .setDescription("Plays song and playlists from YouTube or Spotify")
+        .setDescriptionLocalizations({
+            pl: 'Odtwarza utwór bądź playlisty z YouTube lub Spotify'
+        })
+        .addStringOption((option) => option
+            .setName("insert")
+            .setDescription("Provide link or essential keywords")
+            .setDescriptionLocalizations({
+                pl: 'Wprowadź link lub niezbędne słowa kluczowe'
+            })
+            .setRequired(true)),
 
     run: async ({ client, interaction }) => {
         // EmbedBuilder
@@ -16,7 +28,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle(":raccoon: Musisz być połączony z czatem głosowym, aby użyć tej komendy")
+                        .setTitle(":raccoon: You have to be connected to voice chat to use that command")
                 ]
             });
         }
@@ -52,7 +64,7 @@ module.exports = {
                     embeds: [
                         embed
                             .setColor(0xFFFFFF)
-                            .setTitle(":raccoon: Nie znaleziono podanego utworu")
+                            .setTitle(":raccoon: Couldn't find any tracks")
                     ]
                 });
             }
@@ -65,9 +77,9 @@ module.exports = {
             embed
                 .setColor(0xFFFFFF)
                 .setTitle(`${SONG.title}`)
-                .setDescription(`dodano do kolejki`)
+                .setDescription(`added to queue`)
                 .setThumbnail(SONG.thumbnail)
-                .setFooter({ text: `Długość: ${SONG.duration} ` });
+                .setFooter({ text: `Duartion: ${SONG.duration} ` });
         }
 
         // Handling SPOTIFY ALBUM AND PLAYLIST
@@ -88,7 +100,7 @@ module.exports = {
                     embeds: [
                         embed
                             .setColor(0xFFFFFF)
-                            .setTitle(":raccoon: Nie znaleziono podanej playlisty")
+                            .setTitle(":raccoon: Couldn't find a playlist")
                     ]
                 });
             }
@@ -99,7 +111,7 @@ module.exports = {
             // Set embed
             embed
                 .setColor(0xFFFFFF)
-                .setDescription(`**${SEARCH_RESULT.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
+                .setDescription(`**${SEARCH_RESULT.tracks.length} tracks from [${PLAYLIST.title}](${PLAYLIST.url})** have been added to queue`)
                 .setThumbnail(PLAYLIST.thumbnail)
         }
 
@@ -117,7 +129,7 @@ module.exports = {
                     embeds: [
                         embed
                             .setColor(0xFFFFFF)
-                            .setTitle(":raccoon: Nie znaleziono podanej playlisty")
+                            .setTitle(":raccoon: Couldn't find a playlist")
                     ]
                 });
             }
@@ -126,9 +138,16 @@ module.exports = {
 
             embed
                 .setColor(0xFFFFFF)
-                .setDescription(`**${SEARCH_RESULT.tracks.length} utworów z [${PLAYLIST.title}](${PLAYLIST.url})** zostało dodanych do kolejki`)
+                .setDescription(`**${SEARCH_RESULT.tracks.length} tracks from [${PLAYLIST.title}](${PLAYLIST.url})** have been added to queue`)
                 .setThumbnail(PLAYLIST.thumbnail.url)
         }
+
+        // Handling SOUNDCLOUD TRACK
+
+
+
+
+        // Handling SOUNDCLOUD PLAYLIST
 
         // Handling YOUTUBE VIDEOS together with KEYWORD-SEARCH
         else {
@@ -142,7 +161,7 @@ module.exports = {
                     embeds: [
                         embed
                             .setColor(0xFFFFFF)
-                            .setTitle(":raccoon: Nie znaleziono podanego utworu")
+                            .setTitle(":raccoon: Couldn't find any tracks")
                     ]
                 });
             }
@@ -154,9 +173,9 @@ module.exports = {
             embed
                 .setColor(0xFFFFFF)
                 .setTitle(`${SONG.title}`)
-                .setDescription(`dodano do kolejki`)
+                .setDescription(`added to queue`)
                 .setThumbnail(SONG.thumbnail)
-                .setFooter({ text: `Długość: ${SONG.duration} ` });
+                .setFooter({ text: `Duration: ${SONG.duration} ` });
         }
 
         // Starts playing the queue
