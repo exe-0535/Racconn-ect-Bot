@@ -3,7 +3,10 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("info")
-        .setDescription("Wyświetla informacje na temat aktualnie grającego utworu"),
+        .setDescription("Displays information about currently playing track")
+        .setDescriptionLocalizations({
+            pl: "Wyświetla informacje na temat aktualnie grającego utworu"
+        }),
 
     run: async ({ client, interaction }) => {
 
@@ -16,7 +19,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Brak utworów w kolejce.")
+                        .setTitle("No tracks in queue.")
                 ]
             })
         }
@@ -38,11 +41,11 @@ module.exports = {
                 embed
                     .setColor(0xFFFFFF)
                     .setTitle(song.title)
-                    .setDescription(`Aktualnie odtwarzam: [${song.title}](${song.url})\n autorstwa **${song.author}**\n\n` + `\`00:00\` ` + bar + ` \`${song.duration}\`\n\n`)
+                    .setDescription(`Currently playing: [${song.title}](${song.url})\n by **${song.author}**\n\n` + `\`00:00\` ` + bar + ` \`${song.duration}\`\n\n`)
                     .setThumbnail(song.thumbnail)
                     .addFields(
-                        { name: `Pozostało w kolejce: `, value: `${tracksLeft}`, inline: true },
-                        { name: `Liczba odtworzeń: `, value: `${song.views}`, inline: true }
+                        { name: `Tracks left in queue: `, value: `${tracksLeft}`, inline: true },
+                        { name: `Views: `, value: `${song.views}`, inline: true }
                     )
             ],
         })
