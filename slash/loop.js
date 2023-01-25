@@ -4,7 +4,10 @@ const { QueueRepeatMode } = require("discord-player");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("loop")
-        .setDescription("Zapętluje obecnie grający utwór"),
+        .setDescription("Loops currently playing track")
+        .setDescriptionLocalizations({
+            pl: "Zapętluje obecnie grający utwór"
+        }),
     run: async ({ interaction, client }) => {
 
         let embed = new EmbedBuilder();
@@ -16,7 +19,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle(":raccoon: Musisz być połączony z czatem głosowym, aby użyć tej komendy")
+                        .setTitle(":raccoon: You have to be connected to voice chat to use that command")
                 ]
             });
         }
@@ -26,7 +29,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Brak utworów w kolejce")
+                        .setTitle("No tracks in queue")
                 ]
             });
         }
@@ -39,7 +42,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Zapętlam obecnie grający utwór. By wyłączyć zapętlenie użyj /loop")
+                        .setTitle("Looping currenty playing track. To unloop use this command again.")
                 ]
             });
         }
@@ -50,7 +53,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Ponownie odtwarzam kolejkę")
+                        .setTitle("Unlooped")
                 ]
             });
         }
