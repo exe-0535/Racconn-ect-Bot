@@ -4,7 +4,10 @@ const { MessageEmbed, CommandInteraction } = require("discord.js");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("pause")
-        .setDescription("Wstrzymuje odtwarzany utwór"),
+        .setDescription("Pauses the queue")
+        .setDescriptionLocalizations({
+            pl: 'Wstrzymuje kolejkę'
+        }),
     run: async ({ client, interaction }) => {
 
         let embed = new EmbedBuilder();
@@ -16,7 +19,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Brak utworów w kolejce")
+                        .setTitle("No tracks in queue")
                 ]
             });
         }
@@ -26,7 +29,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle(":raccoon: Musisz być połączony z czatem głosowym, aby użyć tej komendy")
+                        .setTitle(":raccoon: You have to be connected to voice chat to use that command")
                 ]
             });
         }
@@ -37,7 +40,7 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle("Zatrzymano odtwarzanie kolejki")
+                    .setTitle("Paused the queue")
             ]
         });
     }
