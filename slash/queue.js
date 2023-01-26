@@ -3,8 +3,17 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("queue")
-        .setDescription("Wyświetla bieżącą kolejkę odtwarzania")
-        .addNumberOption((option) => option.setName("page").setDescription("Numer strony kolejki").setMinValue(1)),
+        .setNameLocalizations({
+            pl: 'kolejka'
+        })
+        .setDescription("Shows the current queue")
+        .setDescriptionLocalizations({
+            pl: 'Wyświetla bieżącą kolejkę odtwarzania'
+        })
+        .addNumberOption((option) => option.setName("page").setDescription("Queue page")
+            .setDescriptionLocalizations({
+                pl: "Numer strony kolejki"
+            }).setMinValue(1)),
 
     run: async ({ client, interaction }) => {
 
@@ -17,7 +26,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle(":raccoon: Brak utworów w kolejce")
+                        .setTitle(":raccoon: No tracks in queue")
                 ]
             })
         }
@@ -30,7 +39,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle(`:raccoon: Nieprawidłowa strona. Aktualnie jest ${totalPages} stron kolejki`)
+                        .setTitle(`:raccoon: Invalid page. There's currently ${totalPages} pages`)
                 ]
             });
         }
@@ -46,12 +55,12 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setDescription(`**Aktualnie odtwarzam:**\n` +
+                    .setDescription(`**Currently playing:**\n` +
                         (currentSong ? `\`[${currentSong.duration}]\` ${currentSong.title} -- <@${currentSong.requestedBy.id}>` : "None") +
-                        `\n\n**Następnie:**\n${queueString}`
+                        `\n\n**Next:**\n${queueString}`
                     )
                     .setFooter({
-                        text: `Strona ${page + 1} z ${totalPages}`
+                        text: `Page ${page + 1} of ${totalPages}`
                     })
                     .setThumbnail(currentSong.setThumbnail)
             ]
