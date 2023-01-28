@@ -3,7 +3,13 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("quit")
-        .setDescription("Rozłącza bota z kanału głosowego"),
+        .setNameLocalizations({
+            pl: 'opusc'
+        })
+        .setDescription("Disconnects from the voice channel")
+        .setDescriptionLocalizations({
+            pl: `Rozłącza bota z kanału głosowego`
+        }),
     run: async ({ client, interaction }) => {
         const queue = client.player.getQueue(interaction.guild);
         let embed = new EmbedBuilder();
@@ -13,7 +19,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Rozłączono z czatem głosowym")
+                        .setTitle("Disconnected from voice channel")
                 ]
             });
         } else {
@@ -21,7 +27,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Ten bot nie znajduje się na czacie głosowym")
+                        .setTitle("This bot is not on the voice channel")
                 ]
             });
         }
