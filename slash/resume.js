@@ -3,7 +3,13 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("resume")
-        .setDescription("Ponownie odtwarza zatrzymany utwór"),
+        .setNameLocalizations({
+            pl: 'ponow'
+        })
+        .setDescription("Resumes playing stopped track")
+        .setDescriptionLocalizations({
+            pl: "Ponownie odtwarza zatrzymany utwór"
+        }),
     run: async ({ client, interaction }) => {
 
         let embed = new EmbedBuilder();
@@ -15,7 +21,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Brak utworów w kolejce")
+                        .setTitle("No tracks in queue")
                 ]
             });
         }
@@ -25,7 +31,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle(":raccoon: Musisz być połączony z czatem głosowym, aby użyć tej komendy")
+                        .setTitle(":raccoon: You have to be connected to voice chat to use this command")
                 ]
             });
         }
@@ -36,7 +42,7 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle("Ponownie odtwarzam kolejkę")
+                    .setTitle("Resuming playing the queue")
             ]
         });
     }
