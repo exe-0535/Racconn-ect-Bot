@@ -3,7 +3,13 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("skip")
-        .setDescription("Przesuwa kolejkę o jeden utwór w przód"),
+        .setNameLocalizations({
+            pl: 'pomin'
+        })
+        .setDescription("Skips the current track")
+        .setDescriptionLocalizations({
+            pl: `Przesuwa kolejkę o jeden utwór w przód`
+        }),
 
     run: async ({ client, interaction }) => {
 
@@ -16,7 +22,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Brak utworów w kolejce")
+                        .setTitle("No tracks in queue")
                 ]
             });
         }
@@ -28,8 +34,8 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle(`Pominięto "${song.title}"`)
-                    .setDescription(`autorstwa ${song.author}`)
+                    .setTitle(`Skipped "${song.title}"`)
+                    .setDescription(`by ${song.author}`)
             ]
         });
     }
