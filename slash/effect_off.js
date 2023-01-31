@@ -46,7 +46,14 @@ module.exports = {
                 vaporwave: false,
                 phaser: false,
                 nightcore: false,
-                chorus: false
+                chorus: false,
+                compressor: false,
+                dim: false,
+                flanger: false,
+                mono: false,
+                reverse: false,
+                expander: false,
+                surrounding: false
             })
             return interaction.editReply({
                 embeds: [
