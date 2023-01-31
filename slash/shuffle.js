@@ -3,7 +3,11 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("shuffle")
-        .setDescription("Zmienia kolejność odtwarzania kolejki w losowy sposób"),
+        .setNameLocalizations("mieszaj")
+        .setDescription("Shuffles the queue")
+        .setDescriptionLocalizations({
+            pl: "Zmienia kolejność odtwarzania kolejki w losowy sposób"
+        }),
     run: async ({ client, interaction }) => {
         const embed = new EmbedBuilder();
         const queue = client.player.getQueue(interaction.guild);
@@ -12,7 +16,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Brak utworów w kolejce")
+                        .setTitle("No tracks in queue")
                 ]
             });
         }
@@ -21,7 +25,7 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle("Pomyślnie wymieszano")
+                    .setTitle("Successfully shuffled")
             ]
         });
     },
