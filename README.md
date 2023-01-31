@@ -9,7 +9,7 @@
 - :raccoon: Support for <b>YouTube</b> and <b>Spotify</b> (<i>SoundCloud coming soon</i>)
 - :raccoon: Slash commands support
 - :raccoon: <b>14 audio effects</b> including: 8D, Bass Boost, Slowed + Reverb etc.
-- :raccoon: Support for :uk: English and :poland: Polish languages (<i>English coming soon</i>)
+- :raccoon: Support for :uk: English and :poland: Polish languages
 - :raccoon: ...and more (check out <a href="https://github.com/exe-0535/Racconn-ect-Bot/tree/master/slash" target="_blank">all commands</a>)
 
 # Dependencies
