@@ -3,8 +3,13 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("skipto")
-        .setDescription("Pomija kolejkę do podanego w kolejności utworu")
-        .addIntegerOption((option) => option.setName("num").setDescription("Numer utworu").setRequired(true)),
+        .setDescription("Skips to the specified track of the queue")
+        .setNameLocalizations({
+            pl: 'Pomija kolejkę do podanego w kolejności utworu'
+        })
+        .addIntegerOption((option) => option.setName("num").setDescription("Track number").setDescriptionLocalizations({
+            pl: 'Numer utworu w kolejce'
+        }).setRequired(true)),
 
     run: async ({ client, interaction }) => {
 
@@ -17,7 +22,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle(":raccoon: Musisz być połączony z czatem głosowym, aby użyć tej komendy")
+                        .setTitle(":raccoon: You have to be connected to voice chat to use this command")
                 ]
             });
         }
@@ -27,7 +32,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Brak utworów do których można przewinąć")
+                        .setTitle("No tracks to skip to")
                 ]
             });
         }
@@ -39,7 +44,7 @@ module.exports = {
                 embeds: [
                     embed
                         .setColor(0xFFFFFF)
-                        .setTitle("Wprowadzono nieprawidłową wartość")
+                        .setTitle("Invalid input")
                 ]
             });
         }
@@ -50,7 +55,7 @@ module.exports = {
             embeds: [
                 embed
                     .setColor(0xFFFFFF)
-                    .setTitle("Pomyślnie pominięto")
+                    .setTitle("Successfully skipped")
             ]
         });
 
