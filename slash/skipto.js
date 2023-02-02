@@ -4,8 +4,8 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("skipto")
         .setDescription("Skips to the specified track of the queue")
-        .setNameLocalizations({
-            pl: 'Pomija kolejkę do podanego w kolejności utworu'
+        .setDescriptionLocalizations({
+            pl: 'Pomija do utworu o podanym numerze'
         })
         .addIntegerOption((option) => option.setName("num").setDescription("Track number").setDescriptionLocalizations({
             pl: 'Numer utworu w kolejce'
