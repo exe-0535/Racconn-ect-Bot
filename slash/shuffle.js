@@ -3,7 +3,9 @@ const { SlashCommandBuilder, EmbedBuilder } = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("shuffle")
-        .setNameLocalizations("mieszaj")
+        .setNameLocalizations({
+            pl: "mieszaj"
+        })
         .setDescription("Shuffles the queue")
         .setDescriptionLocalizations({
             pl: "Zmienia kolejność odtwarzania kolejki w losowy sposób"
