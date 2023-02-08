@@ -142,12 +142,38 @@ module.exports = {
                 .setThumbnail(PLAYLIST.thumbnail.url)
         }
 
-        // Handling SOUNDCLOUD TRACK
+        // Handling SOUNDCLOUD PLAYLIST
 
+        else if (insert.startsWith("https://soundcloud.com/") && insert.includes("/sets/")) {
+            const SEARCH_RESULT = await client.player.search(insert, {
+                requestedBy: interaction.user,
+                searchEngine: QueryType.SOUNDCLOUD_PLAYLIST
+            })
 
+            const PLAYLIST = SEARCH_RESULT.playlist;
 
+            if (SEARCH_RESULT.tracks.length === 0) {
+                return interaction.editReply({
+                    embeds: [
+                        embed
+                            .setColor(0xFFFFFF)
+                            .setTitle(":raccoon: Couldn't find a playlist")
+                    ]
+                });
+            }
+
+            await QUEUE.addTracks(SEARCH_RESULT.tracks);
+
+            embed
+                .setColor(0xFFFFFF)
+                .setDescription(`**${SEARCH_RESULT.tracks.length} tracks from [${PLAYLIST.title}](${PLAYLIST.url})** have been added to queue`)
+                .setThumbnail(PLAYLIST.thumbnail.url)
+        }
 
         // Handling SOUNDCLOUD PLAYLIST
+
+
+
 
         // Handling YOUTUBE VIDEOS together with KEYWORD-SEARCH
         else {
