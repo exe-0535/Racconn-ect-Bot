@@ -170,9 +170,40 @@ module.exports = {
                 .setThumbnail(PLAYLIST.thumbnail.url)
         }
 
-        // Handling SOUNDCLOUD PLAYLIST
+        // Handling SOUNDCLOUD TRACK
+
+        else if (insert.startsWith("https://soundcloud.com/")) {
+            const SEARCH_RESULT = await client.player.search(insert, {
+                requestedBy: interaction.user,
+                searchEngine: QueryType.SOUNDCLOUD_TRACK
+            })
+
+            // If no results were found
+            if (SEARCH_RESULT.tracks.length === 0) {
+                return interaction.editReply({
+                    embeds: [
+                        embed
+                            .setColor(0xFFFFFF)
+                            .setTitle(":raccoon: Couldn't find any tracks")
+                    ]
+                });
+            }
+
+            // Declaring song searched for
+            const SONG = SEARCH_RESULT.tracks[0];
+
+            // Adding the song to the queue
+            await QUEUE.addTrack(SONG);
+            embed
+                .setColor(0xFFFFFF)
+                .setTitle(`${SONG.title}`)
+                .setDescription(`added to queue`)
+                .setThumbnail(SONG.thumbnail)
+                .setFooter({ text: `Duartion: ${SONG.duration} ` });
 
 
+
+        }
 
 
         // Handling YOUTUBE VIDEOS together with KEYWORD-SEARCH
